@@ -1,0 +1,13 @@
+.global {
+    min-height: 100vh;
+    width: 100%;
+    padding-bottom: 150px;
+    background: #f1f1f1;
+}
+
+::ng-deep {
+    .mat-form-field .form-control:focus {
+        box-shadow: none;
+        background-color: transparent;
+    }
+}

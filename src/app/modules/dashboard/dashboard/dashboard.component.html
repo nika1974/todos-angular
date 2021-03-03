@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<div class="container dashboard">
+    <form class="dashboard-add darkMode-secondary-bg darkMode-color" [formGroup]="dashboardForm" (ngSubmit)="addItem()" [ngClass]="{'toRight': getLangFromStorage() === 'ar'}">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>
+                <label for="name">{{ 'name' | translate }}: </label>
+            </mat-label>
+            <input type="text"
+                matInput
+                class="form-control"
+                formControlName="name">
+            <mat-error *ngIf="isValidInput('name') && dashboardForm.controls['name'].errors.required">
+                {{ 'name-required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>
+                <label for="description">{{ 'description' | translate }}: </label>
+            </mat-label>
+            <textarea matInput class="form-control" formControlName="description" style="min-height: 60px">
+            </textarea>
+            <mat-error *ngIf="isValidInput('description') && dashboardForm.controls['description'].errors.required">
+                {{ 'description-required' | translate }}
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!dashboardForm.valid">{{ 'add-task' | translate }}</button>
+    </form>
+    
+    <div class="dashboard-board darkMode-secondary-bg darkMode-color" [formGroup]="dashboardForm" cdkDropList (cdkDropListDropped)="drop($event, tasks)" [ngClass]="{'toRight': getLangFromStorage() === 'ar'}" #dashboardTasks>
+        <!-- *ngIf="dashboardSrvc.tasks$ | async as tasks"  -->
+        <div class="row" style="margin-left: 15px;">
+            <div class="col-md-6">
+                <mat-form-field>
+                    <mat-label>
+                        <label for="filter">{{ 'filter' | translate }}: </label>
+                    </mat-label>
+                    <input type="text"
+                        matInput
+                        formControlName="filter"
+                        (change)="filterBlurred()"
+                        class="form-control">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="dashboard-board_task darkMode-secondary-bg" cdkDrag *ngFor="let task of tasks" [ngClass]="{'d-none': !tasks.length}">
+            <div class="dashboard-board_task-check">
+                <mat-checkbox [checked]="task.done" color="primary" (change)="updateTask($event, task)">
+                </mat-checkbox>
+            </div>
+            <div style="margin-left: 20px; width: 100%;">
+                <div class="dashboard-board_task-description">
+                    <span style="font-size: 20px;">
+                        {{task.name}}
+                    </span>
+                    <button mat-raised-button color="warn" (click)="deleteTask(task)">
+                        {{ 'delete' | translate }}
+                    </button>
+                </div>
+                <div class="dashboard-board_task-name">
+                    {{task.description}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!tasks?.length" style="padding: 20px;">
+            {{'no-task' | translate}}
+        </div>
+    </div>
+</div>

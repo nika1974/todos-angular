@@ -1,0 +1,155 @@
+::ng-deep {
+    .header {
+        padding: 12px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        font-size: 16px;
+        border-top: 3px solid #58a5c9;
+        background-color: #fff;
+        color: #2b2b2b;
+        span {
+            cursor: pointer;
+            &:focus {outline: none;}
+        }
+
+        &-burger, .burger-check {
+            display: none;
+        }
+        &-dashboard_link {
+            font-size: 20px;
+            padding: 5px 20px;
+            border-radius: 3px;
+            box-shadow: 0px 0px 0px 0px #58a5c9;
+            transition: box-shadow 0.35s;
+            &:hover {
+                box-shadow: 0px 0px 0px 2px #58a5c9;
+            }
+        }
+
+        &-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        &-sign,
+        &-language,
+        &-dark_mode {
+            margin-left: 25px;
+        }
+        
+        &-profile {
+            position: relative;
+            &_thumbnail {
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                }
+            }
+            &_popup {
+                position: absolute;
+                background: #ffff;
+                padding: 15px;
+                border: 1px solid #dedede;
+                border-radius: 5px;
+                top: 60px;
+                right: -20px;
+                z-index: 999;
+                &-item {
+                    margin-bottom: 10px;
+                    &.center {
+                        display: flex;
+                        justify-content: center !important;
+                    }
+                    img {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        margin-bottom: 20px;
+                    }
+                    &.logout {
+                        margin-top: 15px;
+                        color: #0069c3;
+                        a {cursor: pointer;}
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .header {
+            &-dashboard_link {margin-right: unset;}
+
+            &-actions {
+                position: fixed;
+                top: 56px;
+                bottom: 0;
+                width: 100vw;
+                left:100%;
+                right: 0;
+                flex-direction: column;
+                background-color: #ffffff;
+                z-index: 10;
+                align-items: flex-end;
+                padding: 20px 30px;
+                box-shadow: inset 0px 0px 0px 0px #ffffffb2;
+                transition: left 0.3s, box-shadow 0.8s 0.3s;
+            }
+
+            &.burger-active .header-actions {
+                left: 0;
+                box-shadow: inset -0px 30px 55px -20px #58a5c952;
+                transition: left 0.3s, box-shadow 0.8s;
+            }
+
+            .header-profile_thumbnail {
+                display: none;
+            }
+            .header-profile_popup.d-none,
+            .header-profile_popup {
+                display: block !important;
+                position: unset;
+                border: none;
+                padding: 0;
+                margin-bottom: 25px;
+                text-align: right;
+                background-color: transparent !important;
+            }
+            &-burger {
+                display: block;
+                width: 25px;
+                cursor: pointer;
+                transition: transform 0.2s;
+
+                .burger-line {
+                    height: 3px;
+                    margin-bottom: 3px;
+                    background: #4d4d4d;
+                    transition: transform 0.2s, width 0.2s, margin 0.2s;
+                }
+            }
+
+            &.burger-active .header-burger {
+                transform: rotate(180deg);
+                .burger-line:first-child {
+                    transform: rotate(-50deg);
+                    width: 50%;
+                    margin-right: 12px;
+                }
+
+                .burger-line:last-child {
+                    transform: rotate(50deg);
+                    width: 50%;
+                    margin-right: 12px;
+                }
+            }
+
+            &-sign {
+                margin-bottom: 35px;
+            }
+        }
+    }
+}

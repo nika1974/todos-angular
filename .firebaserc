@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "todo-e287c": {
+      "hosting": {
+        "todo": [
+          "todo-e287c"
+        ]
+      }
+    }
+  }
+}

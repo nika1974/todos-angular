@@ -1,1 +1,61 @@
-<p>header works!</p>
+<div class="header darkMode-secondary-bg darkMode-color" #headerRef>
+    <span class="header-dashboard_link" [routerLink]="['/dashboard']">{{ 'dashboard' | translate }}</span>
+    <!-- <input type="checkbox" class="burger-check" id="burger-check"> -->
+    <label class="header-burger" for="burger-check" (click)="toggleBurger(headerRef)">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+    </label>
+    <div class="header-actions darkMode-secondary-bg darkMode-color">
+        <div class="header-profile" *ngIf="auth.userAuthState() | async as user; else sign">
+            <span class="header-profile_thumbnail" (click)="toggleProfile(profile)">
+                <img [src]="user.photoURL ? user.photoURL : 'https://f.hypotheses.org/wp-content/blogs.dir/1010/files/2013/02/silhouette.png'" alt="">
+            </span>
+            <div class="header-profile_popup darkMode-secondary-bg d-none" #profile [ngClass]="{'toRight': getLangFromStorage() === 'ar'}">
+                <div class="header-profile_popup-item center">
+                    <img [src]="user.photoURL ? user.photoURL : 'https://f.hypotheses.org/wp-content/blogs.dir/1010/files/2013/02/silhouette.png'" alt="">
+                </div>
+                <div class="header-profile_popup-item">
+                    {{user.displayName}}
+                </div>
+                <div class="header-profile_popup-item">
+                    {{user.email}}
+                </div>
+                <div class="header-profile_popup-item logout">
+                    <a (click)="logout(headerRef)">{{ 'logout' | translate }}</a>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #sign>
+            <div class="header-sign">
+                <span [routerLink]="['/sign-in']" (click)="toggleBurger(headerRef)">{{ 'sign-in' | translate }}</span> / 
+                <span [routerLink]="['/sign-up']" (click)="toggleBurger(headerRef)">{{ 'sign-up' | translate }}</span>
+            </div>
+        </ng-template>
+
+        <div class="header-language" [ngClass]="{'toRight': getLangFromStorage() === 'ar'}">
+            <mat-form-field>
+                <mat-label>{{ 'select-language' | translate }}</mat-label>
+                <mat-select [(ngModel)]="lang"
+                    (selectionChange)="switchLanguage()">
+                    <mat-option [value]="'en'">
+                        {{'english' | translate}}
+                    </mat-option>
+                    <mat-option [value]="'ar'">
+                        {{'arabic' | translate}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="header-dark_mode">
+            {{ 'dark-mode' | translate }} 
+            <mat-slide-toggle
+                [checked]="checked"
+                [color]="'indigo-pink'"
+                (change)="handleDarkModeSwitch()">
+            </mat-slide-toggle>
+        </div>
+    </div>
+</div>

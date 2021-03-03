@@ -1,0 +1,64 @@
+<div class="container sign-in darkMode-secondary-bg darkMode-color" [ngClass]="{'toRight': getLangFromStorage() === 'ar'}">
+    <div class="alert alert-danger" *ngIf="signInErr">
+        {{signInErr}}
+    </div>
+    <div class="row" style="margin-bottom:15px;">
+      <div class="col-md-12">
+        <h1 class="page-title">{{'login' | translate}}</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>
+                <label for="email">{{'email' | translate}}</label>
+              </mat-label>
+              <input type="email"
+                     matInput
+                     class="form-control"
+                     formControlName="email">
+              <mat-error *ngIf="isValidInput('email') && loginForm.controls['email'].errors.required">
+                {{'email-required' | translate}}
+              </mat-error>
+              <mat-error *ngIf="isValidInput('email') && loginForm.controls['email'].errors.pattern">
+                {{'email-format-required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>
+                <label for="password">{{'password' | translate}}</label>
+              </mat-label>
+              <input type="password"
+                     matInput
+                     name="password"
+                     class="form-control"
+                     formControlName="password">
+              <mat-error *ngIf="isValidInput('password') && loginForm.controls['password'].errors.required">
+                {{'password-required' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <button [disabled]="!loginForm.valid"
+            mat-flat-button
+            color="primary"
+            type="submit" 
+            >{{'sign-in' | translate}}</button>
+        </form>
+      </div>
+    </div>
+    <div style="margin-bottom: 15px; font-weight: 600;">
+      {{'or' | translate}}
+    </div>
+    <div>
+      <div class="row" [ngClass]="{'toRight': getLangFromStorage() === 'ar'}">
+        <div class="col-md-12">
+          <a class="btn darkMode-secondary-bg" role="button" style="text-transform:none; white-space: nowrap;" (click)="auth.signInWithPopup(popupSignInSuccess)">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            {{'login-with-google' | translate}}
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
